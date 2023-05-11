@@ -20,4 +20,5 @@ func Basics() {
 	month := May
 	Enums(&month)
 	Generics()
+	Caches()
 }

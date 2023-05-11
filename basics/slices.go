@@ -19,4 +19,10 @@ func Slices() {
 		}
 		fmt.Println(matrix[i])
 	}
+	fmt.Println(matrix[:5])
+	fmt.Println(matrix[5:])
+	fmt.Println(len(matrix), len(matrix[:]), len(matrix[0:10]))
+	rectangularMatrix := make([][]int, len(matrix)+1, (cap(matrix)+1)*2)
+	copy(rectangularMatrix, matrix)
+	fmt.Println(rectangularMatrix, len(rectangularMatrix), cap(rectangularMatrix))
 }

@@ -1,7 +1,11 @@
 package main
 
-import "go-learinng/basics"
+import (
+	"go-learinng/basics"
+	"go-learinng/concurrency"
+)
 
 func main() {
-	basics.Basics()
+	basics.Examples()
+	concurrency.Examples()
 }

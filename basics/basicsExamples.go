@@ -2,7 +2,7 @@ package basics
 
 import "fmt"
 
-func Basics() {
+func Examples() {
 	fmt.Println("Hello world")
 	Variables()
 	Conditions(25)

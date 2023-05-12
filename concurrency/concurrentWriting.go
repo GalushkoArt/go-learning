@@ -1,6 +1,7 @@
 package concurrency
 
 import (
+	"bufio"
 	"fmt"
 	"go-learinng/utils"
 	"log"
@@ -20,6 +21,21 @@ func ConcurrentWriting() {
 	rand.Seed(time.Now().UnixNano())
 	startTime := time.Now()
 	var counter uint32
+
+	for currency := range currencies {
+		err := writeFxRateToFileWithoutBufio(currency, fxRates(currency))
+		if err != nil {
+			log.Fatal(err)
+		}
+		err = deleteFxRateFile(currency)
+		if err != nil {
+			log.Fatal(err)
+		}
+		counter++
+	}
+	fmt.Println("Elapsed synchronised without bufio for", counter, "currencies", time.Since(startTime))
+	startTime = time.Now()
+	counter = 0
 
 	for currency := range currencies {
 		err := writeFxRateToFile(currency, fxRates(currency))
@@ -96,7 +112,33 @@ func ConcurrentWriting() {
 		}
 	}
 
-	fmt.Println("Elapsed with channels for", counter, "currencies", time.Since(startTime))
+	fmt.Println("Elapsed with channels with atomic for", counter, "currencies", time.Since(startTime))
+
+	startTime = time.Now()
+	currencyChan = make(chan string, len(currencies)/10+5)
+	done := make(chan int)
+	counter = 0
+
+	for currency := range currencies {
+		currency := currency
+		waitGroup.Add(1)
+		go func() {
+			err := writeFxRateToFile(currency, fxRates(currency))
+			if err != nil {
+				log.Fatal(err)
+			}
+			currencyChan <- currency
+			waitGroup.Done()
+		}()
+	}
+	go func() {
+		waitGroup.Wait()
+		close(currencyChan)
+		done <- 1
+	}()
+	removeWithChannels(currencyChan, done)
+
+	fmt.Println("Elapsed with channels with waitGroup for", len(currencies), "currencies", time.Since(startTime))
 }
 
 func currencyFileName(currency string) string {
@@ -104,6 +146,22 @@ func currencyFileName(currency string) string {
 }
 
 func writeFxRateToFile(currency string, rates [365]string) error {
+	file, err := os.Create(currencyFileName(currency))
+	writer := bufio.NewWriter(file)
+	if err != nil {
+		return err
+	}
+	for _, rate := range rates {
+		_, err = writer.WriteString(rate + "\n")
+		if err != nil {
+			return err
+		}
+	}
+	err = writer.Flush()
+	return err
+}
+
+func writeFxRateToFileWithoutBufio(currency string, rates [365]string) error {
 	file, err := os.Create(currencyFileName(currency))
 	if err != nil {
 		return err
@@ -114,7 +172,7 @@ func writeFxRateToFile(currency string, rates [365]string) error {
 			return err
 		}
 	}
-	return nil
+	return err
 }
 
 func deleteFxRateFile(currency string) error {
@@ -133,4 +191,20 @@ func fxRates(currency string) [365]string {
 		)
 	}
 	return rates
+}
+
+func removeWithChannels(currencies <-chan string, done <-chan int) {
+	for {
+		select {
+		case currency := <-currencies:
+			go func() {
+				err := deleteFxRateFile(currency)
+				if err != nil {
+					log.Fatal(err)
+				}
+			}()
+		case <-done:
+			return
+		}
+	}
 }

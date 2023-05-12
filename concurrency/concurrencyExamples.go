@@ -7,4 +7,6 @@ func Examples() {
 	Contexts()
 	WorkerPool()
 	ConcurrentWriting()
+	Refactoring()
+	Caches()
 }

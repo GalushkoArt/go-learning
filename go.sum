@@ -1,4 +1,11 @@
-github.com/GalushkoArt/simpleCache v0.1.0 h1:j5r6HCd9BBTjDVz7w9Y2t5eLLOncLIZsp6UfoqEL9Y0=
-github.com/GalushkoArt/simpleCache v0.1.0/go.mod h1:wECKUJhwzOpbniPalbaywpOkrgyIClkR4++DnIKGPRY=
 github.com/GalushkoArt/simpleCache v0.2.0 h1:Cm/uv9ztIcwBOdC5mSCnoQdrLEg1imp0Bkzxo1hdgwE=
 github.com/GalushkoArt/simpleCache v0.2.0/go.mod h1:wECKUJhwzOpbniPalbaywpOkrgyIClkR4++DnIKGPRY=
+github.com/go-sql-driver/mysql v1.7.1 h1:lUIinVbN1DY0xBg0eMOzmmtGoHwWBbvnWubQUrtU8EI=
+github.com/go-sql-driver/mysql v1.7.1/go.mod h1:OXbVy3sEdcQ2Doequ6Z5BW6fXNQTmx+9S1MCJN5yJMI=
+github.com/jmoiron/sqlx v1.3.5 h1:vFFPA71p1o5gAeqtEAwLU4dnX2napprKtHr7PYIcN3g=
+github.com/jmoiron/sqlx v1.3.5/go.mod h1:nRVWtLre0KfCLJvgxzCsLVMogSvQ1zNJtpYr2Ccp0mQ=
+github.com/lib/pq v1.2.0/go.mod h1:5WUZQaWbwv1U+lTReE5YruASi9Al49XbQIvNi/34Woo=
+github.com/lib/pq v1.10.9 h1:YXG7RB+JIjhP29X+OtkiDnYaXQwpS4JEWq7dtCCRUEw=
+github.com/lib/pq v1.10.9/go.mod h1:AlVN5x4E4T544tWzH6hKfbfQvm3HdbOxrmggDNAPY9o=
+github.com/mattn/go-sqlite3 v1.14.16 h1:yOQRA0RpS5PFz/oikGwBEqvAWhWg5ufRz4ETLjwpU1Y=
+github.com/mattn/go-sqlite3 v1.14.16/go.mod h1:2eHXhiwb8IkHr+BDWZGa96P6+rkvnG63S2DGjv9HUNg=

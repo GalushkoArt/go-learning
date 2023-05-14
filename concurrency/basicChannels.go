@@ -10,14 +10,14 @@ func BasicChannels() {
 	channel2 := make(chan string)
 	go func() {
 		for i := 0; i < 18; i++ {
-			time.Sleep(200 * time.Millisecond)
+			time.Sleep(100 * time.Millisecond)
 			channel1 <- fmt.Sprintf("Channel 1 incremented to %d after 200 mills", i)
 		}
 		close(channel1)
 	}()
 	go func() {
 		for i := 0; i < 3; i++ {
-			time.Sleep(1 * time.Second)
+			time.Sleep(5 * time.Millisecond)
 			channel1 <- fmt.Sprintf("Channel 2 incremented to %d after 1 second", i)
 		}
 		close(channel2)

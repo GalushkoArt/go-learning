@@ -15,10 +15,9 @@ import (
 
 func ConcurrentWriting() {
 	currencies := make(map[string]bool)
-	for i := 0; i < 10000; i++ {
+	for i := 0; i < 2000; i++ {
 		currencies[utils.RandEngString(3)] = true
 	}
-	rand.Seed(time.Now().UnixNano())
 	startTime := time.Now()
 	var counter uint32
 
@@ -196,13 +195,15 @@ func fxRates(currency string) [365]string {
 func removeWithChannels(currencies <-chan string, done <-chan int) {
 	for {
 		select {
-		case currency := <-currencies:
-			go func() {
-				err := deleteFxRateFile(currency)
-				if err != nil {
-					log.Fatal(err)
-				}
-			}()
+		case currency, ok := <-currencies:
+			if ok {
+				go func() {
+					err := deleteFxRateFile(currency)
+					if err != nil {
+						log.Fatal(err)
+					}
+				}()
+			}
 		case <-done:
 			return
 		}

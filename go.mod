@@ -1,5 +1,14 @@
 module go-learinng
 
-go 1.19
+go 1.20
 
-require github.com/GalushkoArt/simpleCache v0.2.0
+require (
+	github.com/GalushkoArt/simpleCache v0.2.0
+	github.com/jmoiron/sqlx v1.3.5
+	github.com/lib/pq v1.10.9
+)
+
+exclude (
+	github.com/go-sql-driver/mysql v1.6.0
+	github.com/mattn/go-sqlite3 v1.14.6
+)

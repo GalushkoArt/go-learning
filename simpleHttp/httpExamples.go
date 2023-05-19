@@ -20,4 +20,5 @@ func Examples() {
 	ctx = context.WithValue(ctx, "db", db)
 	ctx = StockDataPoolUsage(ctx)
 	server.New(ctx)
+	stopWg.Wait()
 }
